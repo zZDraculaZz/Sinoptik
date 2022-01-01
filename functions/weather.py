@@ -3,7 +3,7 @@ import requests
 import xlrd3
 import pandas as pd
 from config import WEATHER_TOKEN, base_location
-from texts import EXPERIANCE, COMMON_TEXT
+from texts import EXPERIENCE, COMMON_TEXT, FUNCTION_TEXT
 
 
 # функция поиска айдишника пользователя в базе данных
@@ -30,27 +30,24 @@ def search_id(chat_id):
 def temperature_reaction(temperature,weather):
 
     if temperature > 23:
-        my_experiance = EXPERIANCE["23+"]
+        my_experience = EXPERIENCE["23+"]
 
     elif 17 < temperature < 23:
-        my_experiance = EXPERIANCE["23"]
+        my_experience = EXPERIENCE["23"]
 
     elif 10 < temperature < 17:
-        my_experiance = EXPERIANCE["17"]
+        my_experience = EXPERIENCE["17"]
 
     elif 0 < temperature < 10:
-        my_experiance = EXPERIANCE["10"]
+        my_experience = EXPERIENCE["10"]
 
     elif -15 < temperature < 0:
-        my_experiance = EXPERIANCE["0"]
+        my_experience = EXPERIENCE["0"]
 
     else:
-        my_experiance = EXPERIANCE["-15"]
+        my_experience = EXPERIENCE["-15"]
 
-    text_answer = str(f'{my_experiance}'
-                      f'\nТемпература:{str(temperature)}'
-                      f'\nОсадки:{weather}'
-                      f'\n\nТы можешь воспользоваться командой /advice если снова захочешь прогуляться.')
+    text_answer = FUNCTION_TEXT["weather_answer"].format(my_experience, temperature, weather)
 
     return text_answer
 
@@ -65,7 +62,7 @@ def morning(chat_id):
 
     else:
 
-        updates = requests.get(f'https://api.openweathermap.org/data/2.5/forecast?lang=ru&lat={lat}&lon={lon}&units=metric&cnt=7&appid={WEATHER_TOKEN}').json()
+        updates = requests.get(FUNCTION_TEXT["url_for_request"].format(lat, lon, WEATHER_TOKEN)).json()
         update_1_hours = int(updates["list"][0]['dt_txt'][11:13])
 
         if update_1_hours < 3:
@@ -107,7 +104,7 @@ def midday(chat_id):
 
     else:
 
-        updates = requests.get(f'https://api.openweathermap.org/data/2.5/forecast?lang=ru&lat={lat}&lon={lon}&units=metric&cnt=7&appid={WEATHER_TOKEN}').json()
+        updates = requests.get(FUNCTION_TEXT["url_for_request"].format(lat, lon, WEATHER_TOKEN)).json()
         update_1_hours = int(updates["list"][0]['dt_txt'][11:13])
 
         if update_1_hours < 3:
@@ -149,7 +146,7 @@ def evening(chat_id):
 
     else:
 
-        updates = requests.get(f'https://api.openweathermap.org/data/2.5/forecast?lang=ru&lat={lat}&lon={lon}&units=metric&cnt=7&appid={WEATHER_TOKEN}').json()
+        updates = requests.get(FUNCTION_TEXT["url_for_request"].format(lat, lon, WEATHER_TOKEN)).json()
         update_1_hours = int(updates["list"][0]['dt_txt'][11:13])
 
         if update_1_hours < 3:
@@ -210,6 +207,7 @@ def save_location(chat_id,lat,lon):
     lats.append(lat)
     lons.append(lon)
 
-    save_location = pd.DataFrame({'chat_id': chat_ids, 'lat': lats, 'lon': lons})  # а вот и "замечательная" вещь которая стала женой моему мозгу (сохраняем айдишники с локациями)
+    # а вот и "замечательная" вещь которая стала женой моему мозгу (сохраняем айдишники с локациями)
+    save_location = pd.DataFrame({'chat_id': chat_ids, 'lat': lats, 'lon': lons})
     save_location.to_excel(base_location, index=False)
     pass
