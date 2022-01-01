@@ -7,7 +7,7 @@ from config import ADMINS_ID
 
 async def on_startup(_):
     for admin_id in ADMINS_ID:
-        await bot.send_message(chat_id=admin_id, text="Я снова ожил! Вот блин, сколько же дел не выполненных...")
+        await bot.send_message(chat_id=admin_id, text="Я снова ожил! Вот блин, сколько же дел невыполненных...")
 
 
 commands.register_handlers_commands(dp)
