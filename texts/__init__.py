@@ -1,0 +1,1 @@
+from texts.dictionars import EXPERIANCE, COMMAND_TEXT, COMMON_TEXT, TIME_TO_CHOICE

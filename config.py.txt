@@ -1,0 +1,10 @@
+#Убрать расширение файла .txt(сделав .py)
+# Ну тут даже мне понятно(токен бота и токен сайта погоды)
+
+BOT_TOKEN = "BOT_TOKEN"
+WEATHER_TOKEN='openweathermap_token'
+
+#местонахождение базы(инопланетной)
+base_location = 'full way to base location, for example: D:/Coding/Sinoptik5/base/save_location.xlsx'
+
+ADMINS_ID = ["ADMIN_ID"]
