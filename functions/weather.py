@@ -27,7 +27,7 @@ def search_id(chat_id):
 
 
 # функция реакции на температуру
-def temperature_reaction(temperature,weather):
+def temperature_reaction(temperature, weather):
 
     if temperature > 23:
         my_experience = EXPERIENCE["23+"]
@@ -180,7 +180,7 @@ def evening(chat_id):
 
 
 # функция запоминания локации
-def save_location(chat_id,lat,lon):
+def save_location(chat_id, lat, lon):
 
     wb = xlrd3.open_workbook(base_location)
     sheet = wb.sheet_by_index(0)  # выбор листа
@@ -191,12 +191,14 @@ def save_location(chat_id,lat,lon):
     lats = []
     lons = []
 
-    for i in vals[1:]:  # читаем имеющиеся айдишники с локациями и запоминаем их
+    # читаем имеющиеся айдишники с локациями и запоминаем их
+    for i in vals[1:]:
         chat_ids.append(i[0])
         lats.append(i[1])
         lons.append(i[2])
 
-        if i[0] == chat_id:  # если находим совпадение,то удаляем его из имеющихся данных,что бы потом добавить в конец списка
+        # если находим совпадение,то удаляем его из имеющихся данных,что бы потом добавить в конец списка
+        if i[0] == chat_id:
             del chat_ids[amount]
             del lats[amount]
             del lons[amount]

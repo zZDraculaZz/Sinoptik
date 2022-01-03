@@ -61,17 +61,20 @@ COMMON_TEXT = {
     "location_not_found": "Пресвятые шестерёнки! Я не обнаружил твою локацию в своих списках, "
                           "попробуй начать с самого начала /start",
 
-    "command_not_found": "Ты уж прости, но я не знаю команду:  \"{text}\"."
+    # {text}
+    "command_not_found": "Ты уж прости, но я не знаю команду:  \"{}\"."
                          "\nНо не унывай, я всё-таки робот и никогда не брошу человека в беде, "
                          "воспользуйся командой /help"
 }
 
 FUNCTION_TEXT = {
+    # 1{EXPERIENCE},2{temperature},3{weather}
     "weather_answer": '{}'
                       '\nТемпература: {} ℃.'
                       '\nОсадки: {}.'
                       '\n\nТы можешь воспользоваться командой /advice если снова захочешь прогуляться.',
 
+    # 1{lat}, 2{lon}, 3{WEATHER_TOKEN}
     "url_for_request": "https://api.openweathermap.org/data/2.5/forecast?lang=ru&lat={}&lon="
                        "{}&units=metric&cnt=7&appid={}"
 }
