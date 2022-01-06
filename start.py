@@ -1,12 +1,14 @@
 from aiogram.utils import executor
 
 from create_bot import dp, bot
+from functions import found_base
 from handlers import commands, user, echo
 from config import ADMINS_ID
 from texts import FOR_ADMINS
 
 
 async def on_startup(_):
+    found_base()
     for admin_id in ADMINS_ID:
         await bot.send_message(chat_id=admin_id, text=FOR_ADMINS["bot_activated"])
 
