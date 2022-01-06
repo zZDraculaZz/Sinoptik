@@ -2,6 +2,9 @@
 __pycache__/
 
 .env
+.env.example
+.env.local
+.env.staging
 base/
 test.py
 
