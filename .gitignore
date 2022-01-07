@@ -5,6 +5,7 @@ __pycache__/
 .env.example
 .env.local
 .env.staging
+
 base/
 test.py
 

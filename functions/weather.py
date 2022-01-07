@@ -64,129 +64,101 @@ def temperature_reaction(temperature, weather):
 
 # функция(ответ) на нажатие кнопки "Утром! 06:00-12:00"
 def morning(chat_id):
-
     lat, lon, id_present = search_id(chat_id)
+    text_answer = COMMON_TEXT["location_not_found"]
 
     if id_present == False:
-        text_answer = COMMON_TEXT["location_not_found"]
+        return text_answer
 
     else:
 
         updates = requests.get(FUNCTION_TEXT["url_for_request"].format(lat, lon, WEATHER_TOKEN)).json()
-        update_1_hours = int(updates["list"][0]['dt_txt'][11:13])
+        update_time = int(updates["list"][0]['dt_txt'][11:13])
+        number = 2
+        repeat_number = True
 
-        if update_1_hours < 3:
-            temperature = float(updates['list'][2]['main']['temp_min'])
-            weather = str(updates['list'][2]['weather'][0]['description'])
-        elif 3 == update_1_hours:
-            temperature = float(updates["list"][1]["main"]["temp_min"])
-            weather = str(updates['list'][1]['weather'][0]['description'])
-        elif 6 == update_1_hours:
-            temperature = float(updates["list"][1]["main"]["temp_min"])
-            weather = str(updates['list'][1]['weather'][0]['description'])
-        elif 9 == update_1_hours:
-            temperature = float(updates["list"][0]["main"]["temp_min"])
-            weather = str(updates['list'][0]['weather'][0]['description'])
-        elif update_1_hours == 12:
-            temperature = float(updates["list"][6]["main"]["temp_min"])
-            weather = str(updates['list'][6]['weather'][0]['description'])
-        elif update_1_hours == 15:
-            temperature = float(updates["list"][5]["main"]["temp_min"])
-            weather = str(updates['list'][5]['weather'][0]['description'])
-        elif update_1_hours == 18:
-            temperature = float(updates["list"][4]["main"]["temp_min"])
-            weather = str(updates['list'][4]['weather'][0]['description'])
-        else:
-            temperature = float(updates['list'][3]["main"]["temp_min"])
-            weather = str(updates['list'][3]['weather'][0]['description'])
+        for i in range(0, 22, 3):
+            if update_time == i:
+                temperature = float(updates['list'][number]['main']['temp_min'])
+                weather = str(updates['list'][number]['weather'][0]['description'])
+                text_answer = temperature_reaction(temperature=temperature, weather=weather)
+                break
 
-        text_answer = temperature_reaction(temperature=temperature, weather=weather)
+            elif number == 1 and repeat_number == True:
+                repeat_number = False
+                continue
 
-    return text_answer
+            elif number == 0:
+                number = 6
+                continue
+
+            elif number != 0:
+                number -= 1
+
+        return text_answer
 
 
 # функция(ответ) на нажатие кнопки "Днём! 12:00-18:00"
 def midday(chat_id):
     lat, lon, id_present = search_id(chat_id)
+    text_answer = COMMON_TEXT["location_not_found"]
 
     if id_present == False:
-        text_answer = COMMON_TEXT["location_not_found"]
+        return text_answer
 
     else:
 
         updates = requests.get(FUNCTION_TEXT["url_for_request"].format(lat, lon, WEATHER_TOKEN)).json()
-        update_1_hours = int(updates["list"][0]['dt_txt'][11:13])
+        update_time = int(updates["list"][0]['dt_txt'][11:13])
+        number = 4
+        repeat_number = True
 
-        if update_1_hours < 3:
-            temperature = float(updates['list'][4]['main']['temp_min'])
-            weather = str(updates['list'][2]['weather'][0]['description'])
-        elif 3 == update_1_hours:
-            temperature = float(updates["list"][3]["main"]["temp_min"])
-            weather = str(updates['list'][1]['weather'][0]['description'])
-        elif 6 == update_1_hours:
-            temperature = float(updates["list"][2]["main"]["temp_min"])
-            weather = str(updates['list'][1]['weather'][0]['description'])
-        elif 9 == update_1_hours:
-            temperature = float(updates["list"][1]["main"]["temp_min"])
-            weather = str(updates['list'][0]['weather'][0]['description'])
-        elif update_1_hours == 12:
-            temperature = float(updates["list"][1]["main"]["temp_min"])
-            weather = str(updates['list'][6]['weather'][0]['description'])
-        elif update_1_hours == 15:
-            temperature = float(updates["list"][0]["main"]["temp_min"])
-            weather = str(updates['list'][5]['weather'][0]['description'])
-        elif update_1_hours == 18:
-            temperature = float(updates["list"][6]["main"]["temp_min"])
-            weather = str(updates['list'][4]['weather'][0]['description'])
-        else:
-            temperature = float(updates['list'][5]["main"]["temp_min"])
-            weather = str(updates['list'][3]['weather'][0]['description'])
+        for i in range(0, 22, 3):
+            if update_time == i:
+                temperature = float(updates['list'][number]['main']['temp_min'])
+                weather = str(updates['list'][number]['weather'][0]['description'])
+                text_answer = temperature_reaction(temperature=temperature, weather=weather)
+                break
 
-        text_answer = temperature_reaction(temperature=temperature, weather=weather)
+            elif number == 1 and repeat_number == True:
+                repeat_number = False
+                continue
 
-    return text_answer
+            elif number == 0:
+                number = 6
+                continue
+
+            elif number != 0:
+                number -= 1
+
+        return text_answer
 
 
 # функция(ответ) на нажатие кнопки "Вечером! 18:00-24:00"
 def evening(chat_id):
     lat, lon, id_present = search_id(chat_id)
+    text_answer = COMMON_TEXT["location_not_found"]
 
     if id_present == False:
-        text_answer = COMMON_TEXT["location_not_found"]
+        return text_answer
 
     else:
 
         updates = requests.get(FUNCTION_TEXT["url_for_request"].format(lat, lon, WEATHER_TOKEN)).json()
         update_1_hours = int(updates["list"][0]['dt_txt'][11:13])
+        number = 6
 
-        if update_1_hours < 3:
-            temperature = float(updates['list'][0]['main']['temp_min'])
-            weather = str(updates['list'][2]['weather'][0]['description'])
-        elif 3 == update_1_hours:
-            temperature = float(updates["list"][5]["main"]["temp_min"])
-            weather = str(updates['list'][1]['weather'][0]['description'])
-        elif 6 == update_1_hours:
-            temperature = float(updates["list"][4]["main"]["temp_min"])
-            weather = str(updates['list'][1]['weather'][0]['description'])
-        elif 9 == update_1_hours:
-            temperature = float(updates["list"][3]["main"]["temp_min"])
-            weather = str(updates['list'][0]['weather'][0]['description'])
-        elif update_1_hours == 12:
-            temperature = float(updates["list"][2]["main"]["temp_min"])
-            weather = str(updates['list'][6]['weather'][0]['description'])
-        elif update_1_hours == 15:
-            temperature = float(updates["list"][1]["main"]["temp_min"])
-            weather = str(updates['list'][5]['weather'][0]['description'])
-        elif update_1_hours == 18:
-            temperature = float(updates["list"][1]["main"]["temp_min"])
-            weather = str(updates['list'][4]['weather'][0]['description'])
-        else:
-            temperature = float(updates['list'][0]["main"]["temp_min"])
-            weather = str(updates['list'][3]['weather'][0]['description'])
+        for i in range(0, 22, 3):
+            if update_1_hours == i:
+                temperature = float(updates['list'][number]['main']['temp_min'])
+                weather = str(updates['list'][number]['weather'][0]['description'])
+                text_answer = temperature_reaction(temperature=temperature, weather=weather)
+                break
 
-        text_answer = temperature_reaction(temperature=temperature, weather=weather)
+            elif number != 0:
+                number -= 1
 
-    return text_answer
+        return text_answer
 
 
 # функция запоминания локации
