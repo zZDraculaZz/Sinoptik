@@ -6,7 +6,7 @@ __pycache__/
 .env.local
 .env.staging
 
-base/
+.base/
 test.py
 
 MANIFEST
