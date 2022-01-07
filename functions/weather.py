@@ -1,23 +1,10 @@
 # здесь лежат все функции
-import os
-
-import openpyxl
 import requests
 import xlrd3
 import pandas as pd
 
 from config import WEATHER_TOKEN, base_location
 from texts import EXPERIENCE, COMMON_TEXT, FUNCTION_TEXT
-
-# функция поиска базы с локациями, если нету базы - создаст
-def found_base():
-    try:
-        wb = xlrd3.open_workbook(base_location)
-    except FileNotFoundError:
-        os.mkdir("database")
-        filepath = base_location
-        wb = openpyxl.Workbook()
-        wb.save(filepath)
 
 # функция поиска айдишника пользователя в базе данных
 def search_id(chat_id):
