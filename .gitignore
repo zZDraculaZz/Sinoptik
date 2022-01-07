@@ -1,13 +1,14 @@
 .idea/
 __pycache__/
+base\
 
 .env
 .env.example
 .env.local
 .env.staging
 
-.base/
 test.py
+test2.py
 
 MANIFEST
 

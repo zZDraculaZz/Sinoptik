@@ -1,4 +1,6 @@
 # здесь лежат все функции
+import os
+
 import openpyxl
 import requests
 import xlrd3
@@ -12,6 +14,7 @@ def found_base():
     try:
         wb = xlrd3.open_workbook(base_location)
     except FileNotFoundError:
+        os.mkdir("base")
         filepath = base_location
         wb = openpyxl.Workbook()
         wb.save(filepath)
