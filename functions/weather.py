@@ -14,7 +14,7 @@ def found_base():
     try:
         wb = xlrd3.open_workbook(base_location)
     except FileNotFoundError:
-        os.mkdir("base")
+        os.mkdir("database")
         filepath = base_location
         wb = openpyxl.Workbook()
         wb.save(filepath)

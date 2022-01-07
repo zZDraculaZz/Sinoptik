@@ -2,6 +2,6 @@
 # BOT_TOKEN = "BOT_TOKEN"
 # WEATHER_TOKEN = "WEATHER_TOKEN"
 
-# base_location = "base/save_location.xlsx"
+# base_location = "database/save_location.xlsx"
 
 # ADMINS_ID = ADMIN_ID, ADMIN_ID
