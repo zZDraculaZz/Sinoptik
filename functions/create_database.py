@@ -5,26 +5,33 @@ import openpyxl
 import xlrd3
 
 from config import base_location
+from texts import CONSOLE_TEXT
 
 
 def search_directory_database():
+    print()
+    print(CONSOLE_TEXT["search_db_dir"])
+
     if os.path.exists("database"):
-        print("Папка с базами данных обнаружена")
+        print(CONSOLE_TEXT["db_dir_found"])
 
     else:
-        print("Папка с базами данных не обнаружена...Создание")
+        print(CONSOLE_TEXT["db_dir_not_found"])
         os.mkdir("database")
-        print("Папка \"database\" успешно создана")
+        print(CONSOLE_TEXT["db_dir_created"])
 
 
 def search_database_location():
+    print()
+    print(CONSOLE_TEXT["search_db_with_loc"])
+
     try:
         wb = xlrd3.open_workbook(base_location)
-        print("База данных с локациями пользователей обнаружена")
+        print(CONSOLE_TEXT["db_with_loc_found"])
 
     except FileNotFoundError:
-        print("База данных с локациями пользователей не обнаружена...Создание")
+        print(CONSOLE_TEXT["db_with_loc_not_found"])
         filepath = base_location
         wb = openpyxl.Workbook()
         wb.save(filepath)
-        print("База данных \"save_location.xlsx\" успешно создана ")
+        print(CONSOLE_TEXT["db_with_loc_created"])
