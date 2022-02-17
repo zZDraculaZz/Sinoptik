@@ -2,28 +2,50 @@
 from aiogram import types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-from texts import TIME_TO_CHOICE, COMMON_TEXT
+from functions import get_dates
+from texts import CHOOSE_TIME, COMMON_TEXT, MENU
+
 
 # Создаем кнопочки
-button_greeting = KeyboardButton(COMMON_TEXT["greeting"])
-button_cancel = KeyboardButton(COMMON_TEXT["cancel"])
+class buttons:
+    greeting = KeyboardButton(COMMON_TEXT["greeting"])
+    cancel = KeyboardButton(COMMON_TEXT["cancel"])
+    backspace_choice = KeyboardButton(COMMON_TEXT["backspace_in_choice"])
+    backspace_menu = KeyboardButton(COMMON_TEXT["backspace_in_menu"])
 
-button_ok = KeyboardButton(COMMON_TEXT["agree"], request_location=True)
+    ok = KeyboardButton(COMMON_TEXT["agree"], request_location=True)
 
-button_morning = KeyboardButton(TIME_TO_CHOICE["morning"])
-button_midday = KeyboardButton(TIME_TO_CHOICE["midday"])
-button_evening = KeyboardButton(TIME_TO_CHOICE["evening"])
+    prediction = KeyboardButton(MENU["prediction"])
+    change_coordinates = KeyboardButton(MENU["change_coordinates"], request_location=True)
+    list_of_commands = KeyboardButton(MENU["list_of_commands"])
 
-# удалить кнопки с экрана
-remove_buttons = types.ReplyKeyboardRemove()
+    night = KeyboardButton(CHOOSE_TIME["night"])
+    morning = KeyboardButton(CHOOSE_TIME["morning"])
+    midday = KeyboardButton(CHOOSE_TIME["midday"])
+    evening = KeyboardButton(CHOOSE_TIME["evening"])
+
+    # удалить кнопки с экрана
+    remove = types.ReplyKeyboardRemove()
+
 
 # Объеденяем кнопочки
-greeting_or_cancel = ReplyKeyboardMarkup(resize_keyboard=True).row(button_greeting).row(button_cancel)
+greeting_or_cancel = ReplyKeyboardMarkup(resize_keyboard=True).row(buttons.greeting).row(buttons.cancel)
+
+agree_or_not = ReplyKeyboardMarkup(resize_keyboard=True).row(buttons.ok).row(buttons.cancel)
+
+menu = ReplyKeyboardMarkup(resize_keyboard=True).row(buttons.prediction).row(buttons.change_coordinates)\
+                                                       .row(buttons.list_of_commands)
 
 
-agree_or_not = ReplyKeyboardMarkup(resize_keyboard=True).row(button_ok).row(button_cancel)
+def buttons_day(chat_id):
+    days = get_dates(chat_id)
+    choose_day = ReplyKeyboardMarkup(resize_keyboard=True).row(KeyboardButton(days[0]), KeyboardButton(days[4]))\
+                                                          .row(KeyboardButton(days[1]), KeyboardButton(days[5]))\
+                                                          .row(KeyboardButton(days[2]), KeyboardButton(days[6]))\
+                                                          .row(KeyboardButton(days[3]), buttons.backspace_menu)
+    return choose_day
 
 
-time_to_choice = ReplyKeyboardMarkup(resize_keyboard=True).row(button_morning).row(button_midday).row(button_evening)
-
-
+choose_time = ReplyKeyboardMarkup(resize_keyboard=True).row(buttons.night).row(buttons.morning)\
+                                                       .row(buttons.midday).row(buttons.evening)\
+                                                       .row(buttons.backspace_choice)

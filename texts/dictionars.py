@@ -1,84 +1,230 @@
+import emoji
+
 # ответы на температуру, от -15 до бесконечного минуса) и в другом углу ринга от 23 до бесконечного пекла
-# (используется в weather.py)
+# Используется в weather.py(functions)
 EXPERIENCE = {
-    "-15": "С таким холодом и водного охлаждения не нужно, надевай:"
-           "\nподштанники, шерстяные носки, майку, шерстяной свитер, штаны, тёплую дублёнку, "
-           "шапку-ушанку, любые тёплые перчатки и шарфик(тёплый),а и про валенки не забудь.",
 
-    "0": "Морозная погодка, человек, ты уверен что хочешь гулять? Хотя кого я спрашиваю..."
-         "\nнадевай тёплые носки, майку, подштанники, шерстяной свитер, "
-         "стёганную куртку, шапку, ботинки и тёплый шарфик.",
+    "-15": f"{emoji.emojize(':scroll:')} С таким холодом и водного охлаждения не нужно, надевай на:"
+           f"\n\n{emoji.emojize(':crown:')} Голову: шапку-ушанку."
+           f"\n{emoji.emojize(':scarf:')} Шею: шарфик (тёплый)."
+           f"\n{emoji.emojize(':coat:')} Торс: майку, шерстяной свитер, тёплую дублёнку."
+           f"\n{emoji.emojize(':gloves:')} Руки: любые тёплые перчатки."
+           f"\n{emoji.emojize(':jeans:')} Талию: подштанники, штаны."
+           f"\n{emoji.emojize(':hiking_boot:')} Ноги: шерстяные носки, валенки.",
 
-    "10": "Холодновато у вас тут, был бы на твоем месте, то надел:"
-          "\nмайку, носки, лёгкие подштанники, штаны, лёгкий свитер, курточку, кроссовки, и курточку с шапкой.",
+    "0": f"{emoji.emojize(':scroll:')} Морозная погодка, человек, ты уверен что хочешь гулять? "
+         "Хотя кого я спрашиваю..."
+         "\nНадевай на: "
+         f"\n\n{emoji.emojize(':crown:')} Голову: шапку."
+         f"\n{emoji.emojize(':scarf:')} Шею: тёплый шарфик."
+         f"\n{emoji.emojize(':coat:')} Торс: майку, шерстяной свитер, стёганную куртку."
+         f"\n{emoji.emojize(':gloves:')} Руки: зимние кожаные перчатки."
+         f"\n{emoji.emojize(':jeans:')} Талию: подштанники, штаны."
+         f"\n{emoji.emojize(':hiking_boot:')} Ноги: тёплые носки, ботинки.",
 
-    "17": "Прохладновато нынче на улице, был бы я твоей робомамой, то сказал бы надеть:"
-          "\nштаны, носки, кроссовки, футболку, по желанию лёгкий свитер и куртку.",
+    "10": f"{emoji.emojize(':scroll:')} Холодновато у вас тут, был бы на твоем месте, то надел на:"
+          f"\n\n{emoji.emojize(':crown:')} Голову: шапку."
+          f"\n{emoji.emojize(':coat:')} Торс: майку, лёгкий свитер, курточку."
+          f"\n{emoji.emojize(':jeans:')} Талию: лёгкие подштанники, штаны."
+          f"\n{emoji.emojize(':hiking_boot:')} Ноги: носки, кроссовки.",
 
-    "23": "Замечательная температура, можно и в робобол сыграть, надевай:"
-          "\nноски, майку, кеды(любую другую лёгкую обувь), джинсы, спортивную курточку.",
+    "17": f"{emoji.emojize(':scroll:')} Прохладновато нынче на улице, был бы я твоей робомамой, "
+          "то сказал бы надеть на:"
+          f"\n\n{emoji.emojize(':coat:')} Торс: футболку, по желанию лёгкий свитер, куртку."
+          f"\n{emoji.emojize(':jeans:')} Талию: штаны."
+          f"\n{emoji.emojize(':hiking_boot:')} Ноги: носки, кроссовки.",
 
-    "23+": "Слушай такую жару даже мой радиатор не выдерживает, сказал бы идти в трусах, но где мои робоманеры, "
-           "надевай:\nмайку, шорты(юбку) и любую свободную для ног обувь.",
+    "23": f"{emoji.emojize(':scroll:')} Замечательная температура, можно и в робобол сыграть, надевай на:"
+          f"\n\n{emoji.emojize(':coat:')} Торс: майку, спортивную курточку."
+          f"\n{emoji.emojize(':jeans:')} Талию: джинсы."
+          f"\n{emoji.emojize(':hiking_boot:')} Ноги: носки, кеды (любую другую лёгкую обувь).",
+
+    "23+": f"{emoji.emojize(':scroll:')} Слушай такую жару даже мой радиатор не выдерживает, сказал бы идти "
+           "в трусах, но где мои робоманеры, надевай на:"
+           f"\n\n{emoji.emojize(':crown:')} Голову: модные очки (по желанию)"
+           f"\n{emoji.emojize(':coat:')} Торс:майку. "
+           f"\n{emoji.emojize(':jeans:')} Талию:шорты (юбку)."
+           f"\n{emoji.emojize(':hiking_boot:')} Ноги: любую свободную для ног обувь.",
 }
 
-
+# Используются в commands.py(handlers)
 COMMAND_TEXT = {
-    "start": "Привет, человек!\nХочешь получить от меня совет по одежде на сегодня?",
 
-    "help": "Если хочешь получить совет по человеческой одежде, то просто нажми \n/start"
-            "\n\nЕсли не знаешь как передать мне свою геолокацию, то просто перейди в настройки своего телефона, "
-            "где есть кнопка с включением GPS, дальше тебе просто потребуется нажать /start "
-            "и продолжить общение со мной."
-            "\n\nА если ты уже предоставлял свою геолокацию нажми /advice",
+    "start": f"{emoji.emojize(':robot:')} Привет, человек!"
+             f"\n{emoji.emojize(':newspaper:')} Хочешь получить от меня совет по одежде?",
 
-    "advice": "Как же я рад тебя снова видеть!\nВо сколько собираешься прогуляться?"
+    "help": f"{emoji.emojize(':label:')} Если хочешь получить совет по человеческой одежде и ещё "
+            f"не \"зарегистрировался\", то просто нажми {emoji.emojize(':backhand_index_pointing_right:')} /start"
+            f"\n\n{emoji.emojize(':label:')} Если не знаешь как передать мне свою геолокацию, "
+            f"то просто перейди в настройки своего телефона {emoji.emojize(':mobile_phone_with_arrow:')}, "
+            f"где есть кнопка с включением GPS {emoji.emojize(':satellite_antenna:')}, "
+            "дальше тебе просто потребуется продолжить общение со мной."
+            f"\n\n{emoji.emojize(':circled_M:')} А если ты уже предоставлял свою геолокацию "
+            f"нажми {emoji.emojize(':backhand_index_pointing_right:')} /menu",
+
+    "menu": f"{emoji.emojize(':winking_face:')} Как же я рад тебя видеть!"
+            f"\n{emoji.emojize(':scroll:')} Теперь выкладывай, что же тебе понадобилось от такого "
+            f"скромника как я? {emoji.emojize(':mechanical_arm:')}{emoji.emojize(':robot:')}",
+
+    "user_not_registered": f"{emoji.emojize(':face_with_monocle:')} Вышло какое-то недопонимание, "
+                           f"по моим данным ты ещё не прошел \"регистрацию\" {emoji.emojize(':clipboard:')}."
+                           f"\n{emoji.emojize(':shushing_face:')} Только не переживай, "
+                           "если это какая-то ошибка, то я буду рад вновь с тобой познакомиться, просто "
+                           f"нажми {emoji.emojize(':backhand_index_pointing_right:')} /start и начни с самого начала.",
+
+    "info": f"{emoji.emojize(':waving_hand:')} Доброго времени суток! "
+            f"\n{emoji.emojize(':label:')} В этом сообщении содержиться описание функций бота:"
+            f"\n\n{emoji.emojize(':keycap_1:')} Бот строит свои советы опираясь "
+            "на координаты местности, которые вы предоставляете."
+            f"\n\n{emoji.emojize(':keycap_2:')} В предоставленном ботом совете будет предложено "
+            "что вам надеть в выбранный вами день и час, а так же будут показаны осадки и температура."
+            f"\n\n{emoji.emojize(':keycap_3:')} Регистрацией пользователя является "
+            "предоставление им координат при запросе."
+            f"\n\n{emoji.emojize(':keycap_4:')} В боте используются фразы юмористического содержания "
+            "с целью поднятия настроения пользователя, а так же для создания характера бота как отдельной личности."
 }
 
 
-TIME_TO_CHOICE = {
-    "morning": "Утром! 06:00-12:00",
+MENU = {
 
-    "midday": "Днём! 12:00-18:00",
+    "prediction": f"{emoji.emojize(':speaking_head:')}Робот, дай совет что надеть!",
 
-    "evening": "Вечером! 18:00-24:00"
+    "change_coordinates": f"{emoji.emojize(':world_map:')} Поменяй мои координаты!",
+
+    "list_of_commands": f"{emoji.emojize(':open_book:')} Покажи список команд!"
+}
+
+
+# {day}
+CHOOSE_DAY = {
+
+    "first": f"{emoji.emojize(':keycap_1:')} "
+             "{}",
+
+    "second": f"{emoji.emojize(':keycap_2:')} "
+              "{}",
+
+    "third": f"{emoji.emojize(':keycap_3:')} "
+             "{}",
+
+    "fourth": f"{emoji.emojize(':keycap_4:')} "
+              "{}",
+
+    "fifth": f"{emoji.emojize(':keycap_5:')} "
+             "{}",
+
+    "sixth": f"{emoji.emojize(':keycap_6:')} "
+             "{}",
+
+    "seventh": f"{emoji.emojize(':keycap_7:')} "
+               "{}",
+
+    "eighth": f"{emoji.emojize(':keycap_8:')} "
+              "{}"
+}
+
+
+CHOOSE_TIME = {
+
+    "morning": f"{emoji.emojize(':cityscape:')} Утром! 05:00-12:00",
+
+    "midday": f"{emoji.emojize(':national_park:')} Днём! 12:00-17:00",
+
+    "evening": f"{emoji.emojize(':sunset:')} Вечером! 17:00-24:00",
+
+    "night": f"{emoji.emojize(':night_with_stars:')} Ночью! 00:00-05:00"
 }
 
 
 COMMON_TEXT = {
-    "greeting": "Привет, да!",
 
-    "cancel": "Проваливай жестянка!",
+    "greeting": f"{emoji.emojize(':waving_hand:')} Привет, да!",
 
-    "agree": "Я согласен, милый робот.",
+    "cancel": f"{emoji.emojize(':anger_symbol:')} Проваливай жестянка!",
 
-    "pained": "Было бы обидно, если бы я был человеком...\nНо я всегда с радостью дам тебе еще один шанс!\n/start",
+    "backspace_in_menu": f"{emoji.emojize(':BACK_arrow:')} Верни в меню!",
 
-    "location_request": "Хорошо!\nНо мне нужна твоя преле...кхм, геолокация.",
+    "backspace_in_choice": f"{emoji.emojize(':BACK_arrow:')} Хочу перевыбрать день!",
 
-    "location_confirm": "Данные успешно получены!\n\nКогда человек собирается выходить на улицу?",
+    "agree": f"{emoji.emojize(':OK_hand:')} Я согласен, милый робот.",
 
-    "location_not_found": "Пресвятые шестерёнки! Я не обнаружил твою локацию в своих списках, "
-                          "попробуй начать с самого начала /start",
+    "pained": f"{emoji.emojize(':pleading_face:')} Было бы обидно, если бы я был человеком..."
+              f"\n{emoji.emojize(':lying_face:')} Но я всегда с радостью дам тебе еще один шанс!"
+              f"\n{emoji.emojize(':label:')} Можешь без угрызения совести "
+              f"нажимать {emoji.emojize(':backhand_index_pointing_right:')} /start",
+
+    "location_request": f"{emoji.emojize(':OK_hand:')} Хорошо!"
+                        f"\n{emoji.emojize(':alien:')} Но мне нужна твоя преле...кхм, геолокация.",
+
+    "location_confirm": f"{emoji.emojize(':pager:')} Данные успешно получены!"
+                        f"\n{emoji.emojize(':robot:')} Чего теперь жаждет твоя человеческая воля?",
+
+    "location_changed": f"{emoji.emojize(':counterclockwise_arrows_button:')} Локация успешно изменена!"
+                        f"\n{emoji.emojize(':robot:')} Чего теперь жаждет твоя человеческая воля?",
+
+    "list_of_commands": "/start -  Зарегистрировать себя (если этого не сделал)"
+                        "\n\n/menu -  Главное меню (доступно зарегистрированным пользователям)"
+                        "\n\n/help -  Помощь"
+                        "\n\n/info -  Информация о боте",
+
+    "return": f"{emoji.emojize(':face_screaming_in_fear:')} Ты сделал невозможное! Ты повернул время вспять!",
 
     # {text}
-    "command_not_found": "Ты уж прости, но я не знаю команду:  \"{}\"."
-                         "\nНо не унывай, я всё-таки робот и никогда не брошу человека в беде, "
-                         "воспользуйся командой /help"
+    "command_not_found": f"{emoji.emojize(':pensive_face:')} ""Ты уж прости, но я не знаю команду:  \"{}\"."
+                         f"\n{emoji.emojize(':robot:')} Но не унывай, я всё-таки робот "
+                         "и никогда не брошу человека в беде. "
+                         f"\n{emoji.emojize(':label:')} Воспользуйся "
+                         f"командой {emoji.emojize(':backhand_index_pointing_right:')} /help",
+    # {text}
+    "error_date": f"{emoji.emojize(':warning:')} ""Вышла какая-то ошибка, выбранная тобой дата \"{}\" неверная."
+                  f"\n{emoji.emojize(':hourglass_done:')} Возможно ты выбрал устаревшую дату или ввёл неверную."
+                  f"\n\n{emoji.emojize(':circled_M:')} Для избежания этой проблемы советую "
+                  f"нажать {emoji.emojize(':backhand_index_pointing_right:')} /menu, "
+                  "тогда тебя вернёт в начальное меню и при следующем запросе, список обновиться. "
+                  f"\n\n{emoji.emojize(':label:')} Можешь попробовать выбрать другую дату",
+
+    "prediction": f"{emoji.emojize(':thinking_face:')} Так-с... нужно определиться когда ты собираешься выйти "
+                  f"на прогулку. {emoji.emojize(':woman_running:')}"
+                  f"\n{emoji.emojize(':down_arrow:')} Я бы хотел услышать твой ответ. {emoji.emojize(':down_arrow:')}",
+
+    # {text}, {precipitation}
+    "day_selected": f"{emoji.emojize(':newspaper:')} "
+                    "Нашел кое-какую информация на \"{}\", думаю ты будешь рад её услышать:"
+                    f"\n\n{emoji.emojize(':pager:')} ""В этот день будет: {}."
+                    f"\n{emoji.emojize(':droplet:')} ""Влажность: {}%."
+                    f"\n{emoji.emojize(':wind_face:')} ""Скорость ветра: {} метров в секунду."
+                    f"\n\n{emoji.emojize(':scroll:')} Ну теперь осталось дело за малым, "
+                    "если хочешь получить совет то скажи, когда собираешься поразмять косточки?",
+
+    "error_time": f"{emoji.emojize(':warning:')} Я не являюсь эспертом времени суток, мой создатель этого не учёл..."
+                  "\nПоэтому я не могу понять что значит \"{}\"."
+                  f"\n\n{emoji.emojize(':label:')} Прошу выбери из предложенного времени и нажми."
+                  f"\n\n{emoji.emojize(':circled_M:')} Или могу предложить вернуться "
+                  f"в главное меню {emoji.emojize(':backhand_index_pointing_right:')} /menu"
 }
 
 FUNCTION_TEXT = {
-    # 1{EXPERIENCE},2{temperature},3{weather}
+
+    # 1{EXPERIENCE},2{temperature}
     "weather_answer": '{}'
-                      '\nТемпература: {} ℃.'
-                      '\nОсадки: {}.'
-                      '\n\nТы можешь воспользоваться командой /advice, если снова захочешь прогуляться.',
+                      f"\n\n{emoji.emojize(':thermometer:')} "'Температура: {} ℃.'
+                      f"\n\n{emoji.emojize(':circled_M:')} Ты можешь воспользоваться командой "
+                      f"{emoji.emojize(':backhand_index_pointing_right:')} /menu, если снова захочешь прогуляться.",
 
     # 1{lat}, 2{lon}, 3{WEATHER_TOKEN}
-    "url_for_request": "https://api.openweathermap.org/data/2.5/forecast?lang=ru&lat={}&lon="
-                       "{}&units=metric&cnt=7&appid={}"
+    "url_for_request": "https://api.openweathermap.org/data/2.5/"
+                       "onecall?lat={}&lon={}&exclude=current,minutely,hourly&units=metric&lang=ru&appid={}"
 }
 
-FOR_ADMINS = {
-    "bot_activated": "Я вновь ожил! Вот блин, сколько же дел невыполненных..."
+
+MIDDLEWARE_TEXT = {
+
+    "block_flood": f"{emoji.emojize(':prohibited:')} Остановись! я не выдержу "
+                   f"столько запросов! {emoji.emojize(':exploding_head:')} "
+                   f"\n{emoji.emojize(':locked_with_key:')} Сработал анти-флуд, отправка сообщение заблокирована на "
+                   "короткое время.",
+
+    "unblock": f"{emoji.emojize(':locked_with_key:')} Робот разблокировал человека и теперь "
+               f"человек свободен! {emoji.emojize(':unlocked:')}"
+
 }
