@@ -6,6 +6,7 @@ from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram.utils.exceptions import Throttled
 
 from create_bot import bot
+from functions import take_language
 from texts import MIDDLEWARE_TEXT
 
 
@@ -38,17 +39,18 @@ class ThrottlingMiddleware(BaseMiddleware):
     async def message_throttled(self, message: types.Message, throttled: Throttled):
         handler = current_handler.get()
         dispatcher = Dispatcher.get_current()
+        language = take_language(str(message.chat.id))
         if handler:
             key = getattr(handler, 'throttling_key', f"{self.prefix}_{handler.__name__}")
         else:
             key = f"{self.prefix}_message"
         delta = throttled.rate - throttled.delta
         if throttled.exceeded_count <= 2:
-            await bot.send_message(message.from_user.id, MIDDLEWARE_TEXT["block_flood"])
+            await bot.send_message(message.from_user.id, MIDDLEWARE_TEXT["block_flood"][language])
         await asyncio.sleep(delta)
         thr = await dispatcher.check_key(key)
         if thr.exceeded_count == throttled.exceeded_count:
-            await bot.send_message(message.from_user.id, MIDDLEWARE_TEXT["unblock"])
+            await bot.send_message(message.from_user.id, MIDDLEWARE_TEXT["unblock"][language])
 
 
 def register_throttling(dp: Dispatcher):

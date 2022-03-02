@@ -5,28 +5,74 @@ import requests
 
 from config import server_timezone, WEATHER_TOKEN
 from db_connection import cursor_on, cursor_off
-from texts import CHOOSE_DAY, FUNCTION_TEXT
+from texts import CHOOSE_DAY, FUNCTION_TEXT, WEEK_DAY, REGISTRATION, LANGUAGES
 
 
 # (Реакция на \start)Проверка существования пользователя в базе данных
-def search_user(chat_id, username):
+def search_user(chat_id, username, language="English", gender="None"):
     cursor = cursor_on()
-    # Создаём переменную для указания существования пользователя
-    user_detected = False
-
     cursor.execute("select chat_id from bot_users where chat_id = %s", (chat_id,))
     table = cursor.fetchall()
     # Если есть хоть 1 такой пользователь, меняем переменную на True
     if len(table) > 0:
-        user_detected = True
+        cursor.execute("select language from bot_users where chat_id = %s", (chat_id,))
+        language = cursor.fetchall()[0][0]
 
     # Сохранение пользователя в базе данных, если его там нет.
-    if not user_detected:
-        cursor.execute("INSERT INTO bot_users (chat_id, user_name) "
-                       "VALUES (%s, %s);",
-                       (chat_id, username))
+    else:
+        cursor.execute("INSERT INTO bot_users (chat_id, user_name, gender, language) "
+                       "VALUES (%s, %s, %s, %s);",
+                       (chat_id, username, gender, language))
 
-    cursor_off(cursor=cursor)
+    cursor_off(cursor)
+
+
+def set_language(chat_id, language):
+    cursor = cursor_on()
+    cursor.execute("UPDATE bot_users SET language=%s"
+                   "WHERE chat_id=%s",
+                   (language, chat_id))
+    cursor_off(cursor)
+
+
+def take_language(chat_id):
+    cursor = cursor_on()
+    cursor.execute("select language from bot_users where chat_id = %s", (chat_id,))
+    language = cursor.fetchall()
+    cursor_off(cursor)
+    if len(language) > 0:
+        language = LANGUAGES.index(language[0][0])
+    else:
+        language = 1
+    return language
+
+
+# Установить пол пользователю
+def set_gender(chat_id, gender):
+    language = take_language(chat_id)
+    if gender == REGISTRATION["male"][language]:
+        gender = "1"
+    elif gender == REGISTRATION["female"][language]:
+        gender = "0"
+
+    cursor = cursor_on()
+    cursor.execute("UPDATE bot_users SET gender=%s"
+                   "WHERE chat_id=%s",
+                   (gender, chat_id))
+    cursor_off(cursor)
+
+
+def check_gender(chat_id):
+    language = take_language(chat_id)
+    cursor = cursor_on()
+    cursor.execute("select gender from bot_users where chat_id = %s", (chat_id,))
+    gender = cursor.fetchall()[0][0]
+    cursor_off(cursor)
+    if gender == "0":
+        gender = REGISTRATION["female"][language]
+    elif gender == "1":
+        gender = REGISTRATION["male"][language]
+    return gender
 
 
 # Запрос к API oneweathermap.org
@@ -78,7 +124,7 @@ def save_location(chat_id, lat, lon):
                        "humidity=%s, wind_speed=%s"
                        "WHERE chat_id=%s",
                        (request_day, temperatures, precipitation, timezone, humidity, wind_speed, chat_id))
-    cursor_off(cursor=cursor)
+    cursor_off(cursor)
 
 
 # Проверка регистрации пользователя
@@ -117,18 +163,27 @@ def timezone_check(chat_id):
     else:
         timezone = timezone[0][0]
 
-    cursor_off(cursor=cursor)
+    cursor_off(cursor)
     return timezone
 
 
+# Выдать день недели
+def get_week_day(time_now, language):
+    given_date = datetime.datetime.fromtimestamp(time_now).strftime('%Y-%m-%d')
+    number_week_day = datetime.date(int(given_date[0:4]), int(given_date[5:7]), int(given_date[8:])).weekday()
+    week_day = WEEK_DAY[number_week_day][language]
+    return week_day
+
+
 # Выдать дату смотря на таймзону пользователя
-def get_dates(chat_id):
+def get_dates(chat_id, language):
     timezone = timezone_check(chat_id)
     time_now = (int(time.time()) - server_timezone) + timezone
     one_day = 86400
     value = []
     for day in CHOOSE_DAY:
-        value.append(CHOOSE_DAY[day].format(datetime.datetime.fromtimestamp(time_now).strftime('%d-%m-%Y')))
+        value.append(CHOOSE_DAY[day].format((datetime.datetime.fromtimestamp(time_now).strftime('%d-%m-%Y')),
+                                            (get_week_day(time_now, language))))
         time_now += one_day
     return value
 
@@ -141,7 +196,7 @@ def weather_request(chat_id):
 
     request_day, temperatures, precipitation, timezone, humidity, wind_speed = url_request(lat=lat, lon=lon)
 
-    cursor.execute("UPDATE weathers SET request_day=%s, temperatures=%s, precipitation=%s, timezone=%s"
+    cursor.execute("UPDATE weathers SET request_day=%s, temperatures=%s, precipitation=%s, timezone=%s,"
                    "humidity=%s, wind_speed=%s "
                    "WHERE chat_id=%s",
                    (request_day, temperatures, precipitation, timezone, humidity, wind_speed, chat_id))
@@ -149,7 +204,7 @@ def weather_request(chat_id):
     cursor_off(cursor)
 
 
-# Функция для для взятия погодных условий из базы для пользователя, а так же запомнить положение в списке,выбранного дня
+# Функция для взятия погодных условий из базы для пользователя, а так же запомнить положение в списке, выбранного дня
 def take_predict_on_day(chat_id, selected_day):
     cursor = cursor_on()
     cursor.execute("select precipitation from weathers where chat_id = %s", (chat_id,))
@@ -164,7 +219,7 @@ def take_predict_on_day(chat_id, selected_day):
 
 
 # Проверить на наличие запрашиваемую пользователем дату
-def check_requested_date(text, chat_id):
+def check_requested_date(text, chat_id, language):
     cursor = cursor_on()
     cursor.execute("select request_day from weathers where chat_id = %s", (chat_id,))
     request_day = int(cursor.fetchall()[0][0])
@@ -187,9 +242,9 @@ def check_requested_date(text, chat_id):
 
     if not date_available:
         selected_day = 0
-        dates = get_dates(chat_id)
+        dates = get_dates(chat_id, language)
         for day in dates:
-            if day == text:
+            if text == day[4:14]:
                 date_available = True
                 weather_request(chat_id)
                 precipitation, humidity, wind_speed = take_predict_on_day(chat_id, selected_day)

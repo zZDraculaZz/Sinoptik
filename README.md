@@ -2,6 +2,8 @@
 # BOT_TOKEN = "BOT_TOKEN"
 # WEATHER_TOKEN = "WEATHER_TOKEN(взять его можно на сайте openweathermap.org)"
 
+# base_location = "database/save_location.xlsx"
+
 # db_name = "db_name"
 # db_user = "db_user"
 # db_password = "db_password"

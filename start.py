@@ -2,7 +2,7 @@ from aiogram.utils import executor
 
 from create_bot import dp, bot
 from middlewares import throttling
-from handlers import commands, user, echo
+from handlers import commands, user, echo, admin
 from config import ADMINS_ID
 from texts import FOR_ADMINS
 
@@ -14,6 +14,7 @@ async def on_startup(_):
 
 throttling.register_throttling(dp)
 commands.register_handlers_commands(dp)
+admin.register_handlers_admin(dp)
 user.register_handlers_user(dp)
 echo.register_handlers_echo(dp)
 

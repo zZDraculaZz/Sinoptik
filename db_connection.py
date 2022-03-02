@@ -50,7 +50,7 @@ def create_db():
 
     # проверка таблиц на наличие,если нету то создаст
     cursor.execute("create table if not exists bot_users(id serial primary key, chat_id varchar(255), "
-                   "user_name varchar(255));")
+                   "user_name varchar(255), gender varchar(255), language varchar(255));")
 
     cursor.execute("create table if not exists coordinates(id serial primary key, chat_id varchar(255),"
                    "lat varchar(255), lon varchar(255));")
